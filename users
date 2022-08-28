@@ -1,3 +1,11 @@
+Num;Surname;Name;Job;OU;Phone;Street;Index;City;Password
+1;Popov;Nikolay;Helpdesk;HELPERS;60;Dibun;111;SPB;P@ssw0rd
+2;Egorova;Juliya;Manager;KB;70;Sinop;222;Moscow;P@ssw0rd
+3;Egorov;Vasya;Admin;HEAVENS;60;Sinop;111;SPB;P@ssw0rd
+
+
+
+
 $Users=Import-Csv -Path 'C:\Users\nwtadmin\Documents\Users.csv' -Delimiter ';'
 
 foreach ($i in $Users) {
