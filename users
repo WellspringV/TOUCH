@@ -1,0 +1,25 @@
+$Users=Import-Csv -Path 'C:\Users\nwtadmin\Documents\Users.csv' -Delimiter ';'
+
+foreach ($i in $Users) {
+$Last=$i.Surname
+$First=$i.Name
+$Job=$i.Job
+$OU=$i.OU
+$Phone=$i.Phone
+$Street=$i.Street
+$City=$i.City
+$ZIP=$i.Index
+$Pass=$i.Password
+$Path='OU='+$OU+',DC=wsr, DC=ru'
+$UPN=$Last+$First+'@wsr.ru'
+$SAM=$Last+$First
+
+New-ADOrganizationalUnit -Name $OU -Path 'DC=wsr,DC=ru' -ProtectedFromAccidentalDeletion $false -PassThru
+New-ADGroup -GroupCategory Security -GroupScope Global -Name $OU -Path $Path
+
+New-ADUser -Surname $Last -GivenName $First  -Name $SAM -Title $Job -OfficePhone $Phone -StreetAddress $Street -City $City -PostalCode $ZIP $AccauntPassword (ConvertTo-SecureString $Pass -AsPlainText -Force) -UserPricipalName $UPN -SamAccountName $SAM -Path $Path -Enabled $true -ChangePasswordAtLogon $false -CannotChangePassword $false -PassTru
+
+Add-ADGroupMember -Identity $OU -Member -$SAM
+}
+
+
